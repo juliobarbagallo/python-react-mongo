@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config['MONGO_URI']='mongodb://localhost/pythonreactdb'
 mongo = PyMongo(app)
+CORS(app)
 db = mongo.db.users
 
 @app.route('/users', methods=['POST'])
