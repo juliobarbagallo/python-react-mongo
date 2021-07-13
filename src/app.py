@@ -41,13 +41,19 @@ def getUser(id):
         'password' : user['password']
     })
 
-@app.route('/users/<id>', methods=['GET'])
+@app.route('/users/<id>', methods=['DELETE'])
 def deleteUser(id):
-    return "received"
+    db.delete_one({'_id':ObjectId(id)})
+    return jsonify({'msg':'User deleted'})
 
 @app.route('/users/<id>', methods=['PUT'])
 def updateUser(id):
-    return "received"
+    db.update_one({'_id': ObjectId(id)}, {'$set': {
+        'userName': request.json['userName'],
+        'userEmail': request.json['userEmail'],
+        'password' : request.json['password']
+    }})
+    return jsonify({'msg': 'User updated.'})
 
 if __name__ == '__main__':
     app.run(debug=True)
